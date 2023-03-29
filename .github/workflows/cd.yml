@@ -1,0 +1,26 @@
+# https://github.com/marketplace/actions/build-and-push-docker-images
+# https://github.com/marketplace/actions/deploy-to-kubernetes-cluster
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+name: CD
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: Azure/k8s-deploy@v4
+      with:
+        namespace: 'github-actions-test'
+        manifests: |
+            manifests
+        images: 'docker.io/tutum/hello-world:latest'
+        imagepullsecrets: |
+            image-pull-secret1
+            image-pull-secret2
