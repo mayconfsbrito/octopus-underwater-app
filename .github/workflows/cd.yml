@@ -19,7 +19,7 @@ jobs:
       with:
         namespace: 'github-actions-test'
         manifests: |
-            ./manifests/main.yml
+            ${{ github.workspace }}/manifests/main.yml
         images: 'docker.io/tutum/hello-world:latest'
         imagepullsecrets: |
             image-pull-secret1
