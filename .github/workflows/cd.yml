@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main ]
 
-name: CD
+name: Deploy
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       with:
         namespace: 'github-actions-test'
         manifests: |
-            manifests/main.yml
+            ./manifests/main.yml
         images: 'docker.io/tutum/hello-world:latest'
         imagepullsecrets: |
             image-pull-secret1
