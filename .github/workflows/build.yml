@@ -67,7 +67,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     - name: Update kube config
-      run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
+      run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }} && echo "Cluster Name ${{ vars.CLUSTER_NAME }}"
     - name: Deploy manifests to Kubernetes cluster
       run: |
         kubectl apply -f manifests/
