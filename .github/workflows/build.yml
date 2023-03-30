@@ -67,7 +67,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     - name: test
-      run: ls -lah ~/
+      run: find / -name .kube
     - name: Update kube config
       run: cat <<<'${{ secrets.KUBE_CONFIG }}' > ~/.kube/config
       # run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
