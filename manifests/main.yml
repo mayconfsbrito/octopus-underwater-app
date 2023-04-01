@@ -2,17 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
+  namespace: github-actions-test
   labels:
-    app: nginx
+    app: github-actions-test
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: github-actions-test
   template:
     metadata:
       labels:
-        app: nginx
+        app: github-actions-test
     spec:
       containers:
       - name: nginx
