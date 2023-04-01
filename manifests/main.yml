@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: github-actions-test
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,3 +25,27 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-actions-test-ingress
+  namespace: github-actions-test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /github-actions-test
+        pathType: Prefix
+        backend:
+          service:
+            name: github-actions-test-service
+            port:
+              name: http
+  tls:
+  - hosts:
+    - example.com
+    secretName: tls-secret-name
