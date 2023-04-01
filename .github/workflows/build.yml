@@ -66,14 +66,21 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-    - name: Create kube
-      run: mkdir -p ~/.kube
-    - name: Update kube config
-      run: |
-        cat <<<'${{ secrets.KUBE_CONFIG }}' > ~/.kube/config
-      # run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
-    - name: Print kubeconfig
-      run: kubectl config view
-    - name: Deploy manifests to Kubernetes cluster
-      run: |
-        kubectl apply -f manifests/
+    - name: deploy to cluster
+      uses: qazz92/kubectl@1.0.3
+      env:
+        kube_confg_data: ${{ secrets.KUBE_CONFIG_DATA }}
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: ${{ secrets.AWS_REGION_NAME }}
+      with:
+        args: apply -f manifests/
+    # - name: Update kube config
+    #   run: |
+    #     cat <<<'${{ secrets.KUBE_CONFIG }}' > ~/.kube/config
+    #   # run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
+    # - name: Print kubeconfig
+    #   run: kubectl config view
+    # - name: Deploy manifests to Kubernetes cluster
+    #   run: |
+    #     kubectl apply -f manifests/
