@@ -72,10 +72,6 @@ jobs:
       run: |
         cat <<<'${{ secrets.KUBE_CONFIG }}' > ~/.kube/config
       # run: aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
-    - name: Update kube config
-      run: |
-        mkdir -p ~/.kube/config
-        cat <<<'${{ secrets.KUBE_CONFIG }}' > ~/.kube/confi
     - name: Print kubeconfig
       run: kubectl config view
     - name: Deploy manifests to Kubernetes cluster
